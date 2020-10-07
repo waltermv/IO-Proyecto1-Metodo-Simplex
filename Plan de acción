@@ -1,0 +1,20 @@
+* Recibir archivo (analisarlo)
+* Imprimir archivo
+* Simplex
+    * Gran M
+    * Dos Fases
+    
+        * Degenerada
+        * Multiples opciones
+        * No acotada
+        * No solución
+* Help
+
+matriz = todo actualmente, columna pivot, fila pivot, el número pivot, estado(degenerada..), número de paso
+
+Simplex (matriz): matriz
+    if normal:
+    if degenerada:
+        respuesta.append(max(degenerada(1), degenerada(2)))
+        
+    return respuesta
