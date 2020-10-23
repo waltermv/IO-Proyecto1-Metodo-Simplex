@@ -56,7 +56,9 @@ def dividirFila(fila, divisor):
         for i in range(largo):      # Se recorre el largo de la fila.
             fila[i] /= divisor
 
-
+# Función que llama a las demás funciones para realizar el método Simplex a partir de una tabla dada.
+# Retorna una lista con la tabla inicial dada con sus pivotes calculados junto con el resultado de llamar
+# recursivamente este mismo método con la tabla siguiente.
 def simplex(tablaActual):
     minimo = min(tablaActual.matriz[0][:-1])
     if (minimo >= 0):
@@ -105,7 +107,7 @@ def simplex(tablaActual):
             listaSimplexMedia[-1].coluPivote = -1
 
             # Si no se ha guardado ningún resultado.
-            if (maxTabla == None and listaSimplexMedia[-1].estado == "Normal"):
+            if (maxTabla == None):
                 maxTabla = listaSimplexMedia    # Se guarda la nueva tabla como máxima.
                 maxResultado = maxTabla[-1].matriz[0][-1]
 
