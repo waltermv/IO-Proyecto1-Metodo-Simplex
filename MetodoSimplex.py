@@ -1,4 +1,3 @@
-from fractions import Fraction
 # Clase que representa la tabla utilizada para la realización del método Simplex.
 class MetodoSimplex:
     # Constructor de la clase.
@@ -48,6 +47,8 @@ def operaEntreFilas(fila1, fila2, coeficiente):
         largo = len(fila1)
         for i in range(largo):      # Se recorre el largo de la fila, ambas filas son de igual tamaño.
             fila2[i] += fila1[i] * coeficiente
+            fila2[i] = round(fila2[i], 8)
+
 
 # Método para dividir toda una fila entre un número. En este programa el divisor siempre será mayor a 0.
 def dividirFila(fila, divisor):
@@ -55,6 +56,8 @@ def dividirFila(fila, divisor):
         largo = len(fila)
         for i in range(largo):      # Se recorre el largo de la fila.
             fila[i] /= divisor
+            fila[i] = round(fila[i], 8)
+
 
 # Función que llama a las demás funciones para realizar el método Simplex a partir de una tabla dada.
 # Retorna una lista con la tabla inicial dada con sus pivotes calculados junto con el resultado de llamar
