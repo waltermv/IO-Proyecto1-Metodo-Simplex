@@ -73,8 +73,4 @@ class MetodoGranM(MetodoSimplex):
 
         respuesta = simplex(self)       # Se realiza el método Simplex con la tabla actual.
 
-        # Si la optimización era una minimización se multiplica por -1 toda la primera fila.
-        if (optimizacion == "min"):
-            respuesta[-1].matriz[0] = [elemento * -1 for elemento in respuesta[-1].matriz[0]]
-
         return respuesta                # Se retorna la respuesta.
