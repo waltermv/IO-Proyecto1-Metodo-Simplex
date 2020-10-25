@@ -49,6 +49,7 @@ def operaEntreFilas(fila1, fila2, coeficiente):
             fila2[i] += fila1[i] * coeficiente
             fila2[i] = round(fila2[i], 8)
 
+
 # Método para dividir toda una fila entre un número. En este programa el divisor siempre será mayor a 0.
 def dividirFila(fila, divisor):
     if (divisor != 1):              # Si el divisor es 1 no se realiza ninguna iteración.
@@ -56,6 +57,7 @@ def dividirFila(fila, divisor):
         for i in range(largo):      # Se recorre el largo de la fila.
             fila[i] /= divisor
             fila[i] = round(fila[i], 8)
+
 
 # Función que llama a las demás funciones para realizar el método Simplex a partir de una tabla dada.
 # Retorna una lista con la tabla inicial dada con sus pivotes calculados junto con el resultado de llamar
