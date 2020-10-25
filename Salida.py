@@ -85,14 +85,12 @@ class Salida:
 
         variables = self.variables  # Lista temporal
         matriz = [] # Lista temporal
-        actuales = self.actuales    # Lista temporal
-        variables = self.variables  # Lista temporal
         lista = []  # Lista temporal
-        for elemento in self.listatablas: # Se realiza lo mismo para imprimir la ultima tabla que para escribir en el archivo
-            actuales = ["U"] + elemento.actuales
-            matriz.append(variables.copy())
-            for i in range(len(elemento.matriz)):
-                matriz.append([actuales[i]] + elemento.matriz[i])
+        # elemento = self.listatablas[-1] #: # Se realiza lo mismo para imprimir la ultima tabla que para escribir en el archivo
+        actuales = ["U"] + elemento.actuales
+        matriz.append(variables.copy())
+        for i in range(len(elemento.matriz)):
+            matriz.append([actuales[i]] + elemento.matriz[i])
             lista.append(matriz)
             variables[elemento.coluPivote] = "X" + str(actuales[elemento.filaPivote])
         for i in range(len(matriz)): # Ahora en lugar de escribir en el archivo imprime en colsola
