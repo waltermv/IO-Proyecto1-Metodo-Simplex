@@ -7,6 +7,7 @@ class Salida:
         self.cantidadVar = entrada.cantidadVariablesDecision + (entrada.restriccion.count("<=") + entrada.restriccion.count("=") + (2 * entrada.restriccion.count(">=")))   # Suma la cantidad de columnas del problema
         self.variables = []  # Atributo que posteriormente se utilizara
         self.actuales = []  # Atributo que posteriormente se utilizara
+        self.resultado = [] # Atributo que posteriormente se utilizara
 
     # Metodo para escribir el resultado en un archivo, crea un archivo de salida, selecciona el tipo de metodo para llamar a otro metodo encargado de llenar el archivo
     def escribirArchivo(self):
@@ -61,18 +62,13 @@ class Salida:
             # print("Iteración: " + str(estado))
             for i in range(len(lista[elemento])): # Itera las filas de la matriz
                 for j in range(len(lista[elemento][0])): # Itera las columna
-                    # print(f"{lista[elemento][i][j]:<20}", end=" ")
                     archivo.write(f"{lista[elemento][i][j]:<20}") # Escribe en el archivo
-                # print()
                 archivo.write("\n") # Escribe en el archivo un salto de linea
             if self.listatablas[elemento].coluPivote != -1: # Si el valor de la columna pivot es -1, significa que llego a un estado final
                 archivo.write((f"VB entrante: X{self.listatablas[elemento].coluPivote}, VB saliente: X{self.listatablas[elemento].filaPivote}, Número Pivot: {self.listatablas[elemento].numPivote}\n")) # Si no es -1 entonces imprime la variable entrante y saliente y el elemento pivot
-                # print(f"VB entrante: X{self.listatablas[elemento].coluPivote}, VB saliente: X{self.listatablas[elemento].filaPivote}, Número Pivot: {self.listatablas[elemento].numPivote}")
             archivo.write("________________________________________" * len(lista[elemento])) # Imprime un divisor de tablas
             archivo.write("\n") # Escribe en el archivo un salto de linea
-            # print("________________________________________" * len(lista[elemento]))
-        self.variables = variables  # Actualiza el valor de los atributos
-        self.actuales = actuales    # Actualiza el valor de los atributos
+        self.resultado = lista[-1]
 
     # Escribir el resultado final en el archivo el valor de U y las variables
     def escribirResultado(self, elemento, archivo):
@@ -82,17 +78,7 @@ class Salida:
                 respuesta.append(elemento.matriz[elemento.actuales.index(i) + 1][-1]) # Ingresa el valor en la ultima columna en la fila en donde se encuentra la vb
             else: # Sino
                 respuesta.append(0) # Ingresa un 0
-
-        variables = self.variables  # Lista temporal
-        matriz = [] # Lista temporal
-        lista = []  # Lista temporal
-        # elemento = self.listatablas[-1] #: # Se realiza lo mismo para imprimir la ultima tabla que para escribir en el archivo
-        actuales = ["U"] + elemento.actuales
-        matriz.append(variables.copy())
-        for i in range(len(elemento.matriz)):
-            matriz.append([actuales[i]] + elemento.matriz[i])
-            lista.append(matriz)
-            variables[elemento.coluPivote] = "X" + str(actuales[elemento.filaPivote])
+        matriz = self.resultado
         for i in range(len(matriz)): # Ahora en lugar de escribir en el archivo imprime en colsola
             for j in range(len(matriz[0])):
                 print(f"{matriz[i][j]:<20}", end=" ")
@@ -100,17 +86,12 @@ class Salida:
         # Se calcula el valor de U y las variables
         if elemento.coluPivote != -1:  # Si es -1, no se imprime lo siguiente
             print(
-                f"VB entrante: X{self.listatablas[elemento].coluPivote}, VB saliente: X{self.listatablas[elemento].filaPivote}, Número Pivot: {self.listatablas[elemento].numPivote}")
+                f"VB entrante: X{elemento.coluPivote}, VB saliente: X{elemento.filaPivote}, Número Pivot: {elemento.numPivote}")
         print()
-        # Si un proble es de minimización es necesario multiplicarlo por -1 a los resultados finales
+        # Si un problema es de minimización es necesario multiplicarlo por -1 a los resultados finales
         if self.entrada.optimizacion == "min": # Si el valor de optimización es min
-            respuesta = [-x for x in respuesta] # Asigna a los valores negativos
-            archivo.write(f"Estado: {elemento.estado}\n") # Escribe en el archivo
-            print(f" Estado: {elemento.estado}\n") # Imprime en consola
-            archivo.write(f" Respuesta final:    U = {-elemento.matriz[0][-1]} {respuesta}")    # Escribe el resultado final
-            print(f" Respuesta final:    U = {-elemento.matriz[0][-1]} {respuesta}")    # Imprime el resultado final
-        else: # Sino
-            archivo.write(f"Estado: {elemento.estado}\n") # Escribe en el archivo
-            print(f" Estado: {elemento.estado}\n")  # Imprime en consola
-            archivo.write(f" Respuesta final:   U = {elemento.matriz[0][-1]} {respuesta}")  # Escribe el resultado final
-            print(f" Respuesta final:    U = {elemento.matriz[0][-1]} {respuesta}") # Imprime el resultado final
+            elemento.matriz[0][-1] *= -1
+        archivo.write(f"Estado: {elemento.estado}\n")  # Escribe en el archivo
+        print(f" Estado: {elemento.estado}\n")  # Imprime en consoa
+        archivo.write(f" Respuesta final:    U = {elemento.matriz[0][-1]} {respuesta}")  # Escribe el resultado final
+        print(f" Respuesta final:    U = {elemento.matriz[0][-1]} {respuesta}")  # Imprime el resultado final
